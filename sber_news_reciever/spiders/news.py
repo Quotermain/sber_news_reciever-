@@ -15,12 +15,9 @@ class NewsSpider(scrapy.Spider):
 				'text': news.css('span.na-article__title::text').get()
 			}
 			
-		next_page = response.css(
-			'div.na-paging a.na-paging__page na-paging__page_next::attr(href)'
+		next_page = response.xpath(
+			"//div[@class='na-paging']/a/@href"
 		).get()
-		print()
-		print(next_page)
-		print()
 		if next_page is not None:
 			yield response.follow(next_page, callback=self.parse)
 		
